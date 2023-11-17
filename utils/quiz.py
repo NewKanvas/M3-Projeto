@@ -1,4 +1,6 @@
 from cores import *
+import os
+from time import sleep
 
 
 def sair(x):
