@@ -1,6 +1,8 @@
 from time import sleep
 import os
 
+# from index import *
+
 
 def overline(title, symbol, size):
     header = " " * size + f"{title}" + " " * size

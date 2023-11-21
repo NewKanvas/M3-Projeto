@@ -1,28 +1,17 @@
-from cores import *
 import os
 from time import sleep
+from utils.cores import *
+from utils.lines import *
+from utils.aluno import Aluno
 
 
 def sair(x):
     x = str(x)
     if x == "0":
         print(f"{g}\nObrigado por usar nosso Quiz.{rt}")
-        print(f"{g}Respostas foram salvas no arquivo {y}'respostas.csv'.{rt}")
+        print(f"{g}Respostas foram salvas no arquivo {y}'alunos.csv'.{rt}")
+        sleep(1)
         exit()
-
-
-def titulo(title):
-    header = " " * 4 + f"{title}" + " " * 4
-    overline = "‾" * len(header)
-
-    print(header, f"\n{overline}")
-
-
-def barra(title):
-    header = " " * 4 + f"{title}" + " " * 4
-    overline = "‾" * len(header)
-
-    print(f"\n{overline}")
 
 
 def nome(respostas):
@@ -30,13 +19,13 @@ def nome(respostas):
         os.system("cls")
 
         title = "Nome"
-        titulo(title)
+        overline(title, "─", 4)
 
         print(
             f"{y}Em qualquer momento, digite '0' para sair:{rt}",
             "\n\nDigite o nome do Paciente",
         )
-        barra(title)
+        underline(title, "─", 4)
 
         nome = input(">> ")
 
@@ -50,27 +39,18 @@ def idade(respostas):
         os.system("cls")
 
         title = "Idade"
-        titulo(title)
+        overline(title, "─", 4)
 
         print("Digite a idade do Paciente")
 
-        barra(title)
+        underline(title, "─", 4)
 
         idade = input(">> ")
 
-        try:
-            idade = int(idade)
-            if idade > 0:
-                respostas["Idade"] = idade
-                break
-            else:
-                print(f"{r}Valor inválido. A idade deve ser maior que zero.{rt}")
-                sleep(1)
-                continue
-        except ValueError:
-            print(f"{r}Entrada inválida. Digite um valor numérico.{rt}")
-            sleep(1)
-            continue
+        sair(idade)
+        sair(idade)
+        respostas["Idade"] = idade
+        break
 
 
 def genero(respostas):
@@ -78,12 +58,12 @@ def genero(respostas):
         os.system("cls")
 
         title = "Gênero"
-        titulo(title)
+        overline(title, "─", 4)
 
         print("Digite o número correspondente ao gênero do Paciente:")
         print(f"{y}[1]{rt} - Masculino {y}[2]{rt} - Feminino {y}[3]{rt} - Não Binário")
 
-        barra(title)
+        underline(title, "─", 4)
 
         genero = input(">> ")
 
@@ -114,10 +94,10 @@ def cpf(respostas):
         os.system("cls")
 
         title = "CPF"
-        titulo(title)
+        overline(title, "─", 4)
 
         print("Digite o CPF do Paciente (sem pontos):")
-        barra(title)
+        underline(title, "─", 4)
 
         cpf = input(">> ")
 
@@ -137,10 +117,10 @@ def bairro(respostas):
         os.system("cls")
 
         title = "Bairro"
-        titulo(title)
+        overline(title, "─", 4)
 
         print("Digite o bairro do Paciente:")
-        barra(title)
+        underline(title, "─", 4)
 
         bairro = input(">> ")
 
@@ -154,10 +134,10 @@ def sintomas(respostas):
         os.system("cls")
 
         title = "Sintomas"
-        titulo(title)
+        overline(title, "─", 4)
 
         print("Descreva os sintomas do Paciente:")
-        barra(title)
+        underline(title, "─", 4)
 
         sintomas = input(">> ")
 
@@ -170,13 +150,13 @@ def classificacao(respostas):
     while True:
         os.system("cls")
         title = "Classificacao"
-        titulo(title)
+        overline(title, "─", 4)
 
         print("Classifique o estado de saúde do Paciente.")
         print(
             f"{y}[1]{rt} - {b}Não Urgente{rt}  {y}[2]{rt} - {g}Pouco Urgente{rt} {y}[3]{rt} - {y}Urgente{rt} {y}[4]{rt} - {m}Muito Urgente{rt}  {y}[5]{rt} - {r}Emergência{rt}"
         )
-        barra(title)
+        underline(title, "─", 4)
 
         classificacao = int(input("Digite o número correspondente à classificação: "))
 
@@ -208,7 +188,7 @@ def consultorio(respostas):
     while True:
         os.system("cls")
         title = "Encaminhar para Consultorio"
-        titulo(title)
+        overline(title, "─", 4)
 
         lista = {
             "Cardiologia": 11,
@@ -227,7 +207,7 @@ def consultorio(respostas):
         for i, sala in enumerate(lista, start=1):
             print(f"{y}{i}{rt} - {sala}")
 
-        barra(title)
+        underline(title, "─", 4)
 
         consulta = int(input("Digite o número correspondente ao consultorio: "))
 
@@ -239,3 +219,34 @@ def consultorio(respostas):
         respostas["Consultorio"] = sala_escolhida
         respostas["Sala"] = local_sala
         break
+
+
+def iniciar():
+    while True:
+        respostas = {}
+
+        nome(respostas)
+        idade(respostas)
+        genero(respostas)
+        cpf(respostas)
+        bairro(respostas)
+        sintomas(respostas)
+        classificacao(respostas)
+        consultorio(respostas)
+
+        aluno = Aluno(
+            respostas["Nome"],
+            respostas["Idade"],
+            respostas["Genero"],
+            respostas["CPF"],
+            respostas["Bairro"],
+            respostas["Sintomas"],
+            respostas["Classificação"],
+            respostas["Consultorio"],
+            respostas["Sala"],
+        )
+        aluno.salvar()
+
+
+# a = Aluno("Axl", "18/11/2004", "Masculino", "Rua A", "e@mail", "99999999")
+# a.salvar()
