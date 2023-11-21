@@ -1,0 +1,5 @@
+sep=,
+id_aluno,Nome,Matricula,Data_Nascimento,Status,Genero,Endereço,Email,Telefone
+1,Axl,17-11-2023 15:52:29,18/11/2004,Ativo,Masculino,Rua A,e@mail,99999999
+2,Axl,202311,18/11/2004,Ativo,Masculino,Rua A,e@mail,99999999
+3,Axl,2023110003,18/11/2004,Ativo,Masculino,Rua A,e@mail,99999999
