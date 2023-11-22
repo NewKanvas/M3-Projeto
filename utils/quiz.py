@@ -29,9 +29,9 @@ def nome(respostas):
         )
         underline(title, "─", 4)
 
-        getinput()
+        resposta = getinput()
 
-        respostas["Nome"] = nome
+        respostas["Nome"] = resposta
         return nome
 
 
@@ -195,5 +195,5 @@ def iniciar():
         aluno.salvar()
 
 
-# a = Aluno("Axl", "18/11/2004", "Masculino", "Rua A", "e@mail", "99999999")
-# a.salvar()
+if __name__ == "__main__":
+    iniciar()
