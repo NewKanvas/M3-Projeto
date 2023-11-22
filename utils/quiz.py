@@ -32,7 +32,7 @@ def nome(respostas):
         resposta = getinput()
 
         respostas["Nome"] = resposta
-        return nome
+        return resposta
 
 
 def data_nasc(respostas):
@@ -45,12 +45,15 @@ def data_nasc(respostas):
         print("Digite a data de nascimento do aluno (sem /):")
         underline(title, "─", 4)
 
-        data = input(">> ")
-        sair(data)
+        resposta = getinput()
 
-        if data.isdigit() and len(data) == 8:
-            respostas["Data_Nascimento"] = data
-            return nome
+        if resposta == "0":
+            respostas["Data_Nascimento"] = resposta
+            return resposta
+
+        if resposta.isdigit() and len(resposta) == 8:
+            respostas["Data_Nascimento"] = resposta
+            return resposta
         else:
             print(
                 f"\n{r}Data de nascimento inválida. Certifique-se de inserir 8 dígitos numéricos.{rt}"
@@ -71,22 +74,24 @@ def genero(respostas):
 
         underline(title, "─", 4)
 
-        genero = input(">> ")
+        resposta = getinput()
 
-        sair(genero)
+        if resposta == "0":
+            respostas["Genero"] = resposta
+            return resposta
 
-        if genero.isdigit():
-            genero = int(genero)
+        if resposta.isdigit():
+            resposta = int(resposta)
 
-            if genero in [1, 2, 3]:
+            if resposta in [1, 2, 3]:
                 respostas["Genero"] = (
                     "Masculino"
-                    if genero == 1
+                    if resposta == 1
                     else "Feminino"
-                    if genero == 2
+                    if resposta == 2
                     else "Não Binário"
                 )
-                return genero
+                return resposta
             else:
                 print(f"{r}Opção inválida. Escolha entre 1, 2 ou 3.{rt}")
                 sleep(1)
@@ -107,11 +112,10 @@ def endereco(respostas):
         print("Digite o endereco do aluno:")
         underline(title, "─", 4)
 
-        local = input(">> ")
+        resposta = getinput()
 
-        sair(local)
-        respostas["Endereço"] = local
-        return local
+        respostas["Endereço"] = resposta
+        return resposta
 
 
 def email(respostas):
@@ -124,11 +128,10 @@ def email(respostas):
         print("Digite o email do aluno:")
         underline(title, "─", 4)
 
-        mail = input(">> ")
+        resposta = getinput()
 
-        sair(mail)
-        respostas["Email"] = mail
-        return mail
+        respostas["Email"] = resposta
+        return resposta
 
 
 def telefone(respostas):
@@ -141,13 +144,15 @@ def telefone(respostas):
         print("Digite o telefone do aluno (sem DDD):")
         underline(title, "─", 4)
 
-        n = input(">> ")
+        resposta = getinput()
 
-        sair(n)
+        if resposta == "0":
+            respostas["Telefone"] = resposta
+            return resposta
 
-        if n.isdigit() and len(n) == 9:
-            respostas["Telefone"] = n
-            return n
+        if resposta.isdigit() and len(resposta) == 9:
+            respostas["Telefone"] = resposta
+            return resposta
         else:
             print(
                 f"\n{r}Telefone inválido. Certifique-se de inserir 9 dígitos numéricos.{rt}"
