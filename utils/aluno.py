@@ -41,19 +41,20 @@ class Aluno:
         with open(csvfilename, mode="a", newline="", encoding="utf-8") as file:
             fieldnames = [
                 "id_aluno",
-                "Nome",
-                "Matricula",
-                "Data_Nascimento",
-                "Status",
-                "Genero",
-                "Endereço",
-                "Email",
-                "Telefone",
+                "nome",
+                "matricula",
+                "data_nascimento",
+                "status",
+                "genero",
+                "endereço",
+                "email",
+                "telefone",
             ]
             writer = csv.DictWriter(file, fieldnames=fieldnames)
 
             if file.tell() == 0:
                 writer.writeheader()
+                next_id = 1
 
             now = datetime.now()
             matricula_date = now.strftime("%Y%m")
@@ -62,14 +63,14 @@ class Aluno:
             writer.writerow(
                 {
                     "id_aluno": next_id,
-                    "Nome": self.nome,
-                    "Matricula": matricula,
-                    "Data_Nascimento": self.data_nascimento,
-                    "Status": self.status,
-                    "Genero": self.genero,
-                    "Endereço": self.endereco,
-                    "Email": self.email,
-                    "Telefone": self.telefone,
+                    "nome": self.nome,
+                    "matricula": matricula,
+                    "data_nascimento": self.data_nascimento,
+                    "status": self.status,
+                    "genero": self.genero,
+                    "endereço": self.endereco,
+                    "email": self.email,
+                    "telefone": self.telefone,
                 }
             )
 

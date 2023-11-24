@@ -3,12 +3,12 @@ import os
 from utils.cores import *
 from utils.lines import *
 from utils.quiz import iniciar
+from utils.aluno import *
 
 
 def menu():
     lista = {
-        "Cadastrar Aluno": iniciar,
-        "Evasão Aluno": "aluno",
+        "Cadastrar Aluno": iniciar,  # Facilitar a inserção de alunos na tabela de Excel
         "Cadastrar Curso": "aluno",
         "Deletar Curso": "aluno",
         "Cadastrar Facilitador": "aluno",
@@ -35,5 +35,15 @@ def menu():
             os.system("cls")
             lista[list(lista.keys())[x - 1]]()
 
+
+aluno = Aluno(
+    "Jao",
+    "18112004",
+    "Masculino",
+    "Rua A",
+    "j@m",
+    "980025008",
+)
+aluno.salvar()
 
 menu()

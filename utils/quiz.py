@@ -20,7 +20,7 @@ def nome(respostas):
     while True:
         os.system("cls")
 
-        title = "Nome"
+        title = "nome"
         overline(title, "─", 4)
 
         print(
@@ -31,7 +31,7 @@ def nome(respostas):
 
         resposta = getinput()
 
-        respostas["Nome"] = resposta
+        respostas["nome"] = resposta
         return resposta
 
 
@@ -39,7 +39,7 @@ def data_nasc(respostas):
     while True:
         os.system("cls")
 
-        title = "Data_Nascimento"
+        title = "data_nascimento"
         overline(title, "─", 4)
 
         print("Digite a data de nascimento do aluno (sem /):")
@@ -48,11 +48,11 @@ def data_nasc(respostas):
         resposta = getinput()
 
         if resposta == "0":
-            respostas["Data_Nascimento"] = resposta
+            respostas["data_nascimento"] = resposta
             return resposta
 
         if resposta.isdigit() and len(resposta) == 8:
-            respostas["Data_Nascimento"] = resposta
+            respostas["data_nascimento"] = resposta
             return resposta
         else:
             print(
@@ -77,14 +77,14 @@ def genero(respostas):
         resposta = getinput()
 
         if resposta == "0":
-            respostas["Genero"] = resposta
+            respostas["genero"] = resposta
             return resposta
 
         if resposta.isdigit():
             resposta = int(resposta)
 
             if resposta in [1, 2, 3]:
-                respostas["Genero"] = (
+                respostas["genero"] = (
                     "Masculino"
                     if resposta == 1
                     else "Feminino"
@@ -114,7 +114,7 @@ def endereco(respostas):
 
         resposta = getinput()
 
-        respostas["Endereço"] = resposta
+        respostas["endereço"] = resposta
         return resposta
 
 
@@ -122,7 +122,7 @@ def email(respostas):
     while True:
         os.system("cls")
 
-        title = "Email"
+        title = "email"
         overline(title, "─", 4)
 
         print("Digite o email do aluno:")
@@ -130,7 +130,7 @@ def email(respostas):
 
         resposta = getinput()
 
-        respostas["Email"] = resposta
+        respostas["email"] = resposta
         return resposta
 
 
@@ -138,7 +138,7 @@ def telefone(respostas):
     while True:
         os.system("cls")
 
-        title = "Telefone"
+        title = "telefone"
         overline(title, "─", 4)
 
         print("Digite o telefone do aluno (sem DDD):")
@@ -147,11 +147,11 @@ def telefone(respostas):
         resposta = getinput()
 
         if resposta == "0":
-            respostas["Telefone"] = resposta
+            respostas["telefone"] = resposta
             return resposta
 
         if resposta.isdigit() and len(resposta) == 9:
-            respostas["Telefone"] = resposta
+            respostas["telefone"] = resposta
             return resposta
         else:
             print(
@@ -166,36 +166,36 @@ def iniciar():
         respostas = {}
 
         nome(respostas)
-        if respostas["Nome"] == "0":
+        if respostas["nome"] == "0":
             break
 
         data_nasc(respostas)
-        if respostas["Data_Nascimento"] == "0":
+        if respostas["data_nascimento"] == "0":
             break
 
         genero(respostas)
-        if respostas["Genero"] == "0":
+        if respostas["genero"] == "0":
             break
 
         endereco(respostas)
-        if respostas["Endereço"] == "0":
+        if respostas["endereço"] == "0":
             break
 
         email(respostas)
-        if respostas["Email"] == "0":
+        if respostas["email"] == "0":
             break
 
         telefone(respostas)
-        if respostas["Telefone"] == "0":
+        if respostas["telefone"] == "0":
             break
 
         aluno = Aluno(
-            respostas["Nome"],
-            respostas["Data_Nascimento"],
-            respostas["Genero"],
-            respostas["Endereço"],
-            respostas["Email"],
-            respostas["Telefone"],
+            respostas["nome"],
+            respostas["data_nascimento"],
+            respostas["genero"],
+            respostas["endereço"],
+            respostas["email"],
+            respostas["telefone"],
         )
         aluno.salvar()
 
