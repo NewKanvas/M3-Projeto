@@ -23,7 +23,7 @@ CREATE TABLE matricula (
 `cpf_aluno_fk` VARCHAR(22) NOT NULL);
 
 CREATE TABLE curso (
-`id_curso` INT(11) PRIMARY KEY NOT NULL,
+`id_curso` INT(11) PRIMARY AUTO_INCREMENT KEY NOT NULL,
 `nome_curso` VARCHAR(200) NOT NULL,
 `duracao` VARCHAR(100) NOT NULL,
 `inicio` DATE NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE presenca_aluno_monitor  (
 `cpf_monitor` VARCHAR(22) NOT NULL);
 
 CREATE TABLE presenca_aluno_facilitador (
-`id_aula_facilitador` INTEGER PRIMARY KEY NOT NULL,
+`id_aula_facilitador` INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
 `data` DATE NOT NULL,
 `cpf_facilitador` VARCHAR(22) NOT NULL,
 `modulo` INT(10) NOT NULL,
