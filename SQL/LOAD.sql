@@ -26,12 +26,70 @@ SQL que combine pelo menos 3 tabelas.
 '''
 
 -- Função para adcionar alunos de acordo com a tabela csv:
-LOAD DATA INFILE '\alunos.csv'
+-- Load para o arquivo aluno.csv
+LOAD DATA INFILE 'aluno.csv'
 REPLACE INTO TABLE aluno
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
+
+-- Load para o arquivo curso.csv
+LOAD DATA INFILE 'curso.csv'
+REPLACE INTO TABLE curso
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+-- Load para o arquivo facilitador.csv
+LOAD DATA INFILE 'facilitador.csv'
+REPLACE INTO TABLE facilitador
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+-- Load para o arquivo instituicao.csv
+LOAD DATA INFILE 'instituicao.csv'
+REPLACE INTO TABLE instituicao
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+-- Load para o arquivo matricula.csv
+LOAD DATA INFILE 'matricula.csv'
+REPLACE INTO TABLE matricula
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+-- Load para o arquivo modulo.csv
+LOAD DATA INFILE 'modulo.csv'
+REPLACE INTO TABLE modulo
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+-- Load para o arquivo monitor.csv
+LOAD DATA INFILE 'monitor.csv'
+REPLACE INTO TABLE monitor
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+-- Load para o arquivo turma.csv
+LOAD DATA INFILE 'turma.csv'
+REPLACE INTO TABLE turma
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
 
 -- Ver a tabela
 SELECT * FROM alunos;
