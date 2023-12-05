@@ -94,6 +94,11 @@ IGNORE 1 ROWS;
 -- Ver a tabela
 SELECT * FROM alunos;
 
+-- Deletar Tabela
+DELETE FROM curso;
+-- Desativa o Safe Mode nas preferencias.
+-- (To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.)
+
 -- Ver filtrado
 
 SELECT * FROM alunos WHERE matricula LIKE '%4';
