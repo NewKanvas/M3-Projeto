@@ -102,3 +102,8 @@ DELETE FROM curso;
 -- Ver filtrado
 
 SELECT * FROM alunos WHERE matricula LIKE '%4';
+
+'''
+CORRIGIR O UTF-8 NOS CSV
+1,"CiÃªncia da ComputaÃ§Ã£o","4 anos","2023-01-15","2026-12-20"
+'''
