@@ -1,7 +1,7 @@
 -- C:\xampp\mysql\data\resiliadata
 
 -- Função para adcionar alunos de acordo com a tabela csv:
-LOAD DATA INFILE '\aluno.csv'
+LOAD DATA INFILE '\CSV_aluno.csv'
 REPLACE INTO TABLE aluno
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -14,7 +14,7 @@ select * from aluno;
 
 
 -- curso
-LOAD DATA INFILE '\curso.csv'
+LOAD DATA INFILE '\CSV_curso.csv'
 REPLACE INTO TABLE curso
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -26,7 +26,7 @@ select * from curso;
 -- disciplina
 
 -- facilitador
-LOAD DATA INFILE '\facilitador.csv'
+LOAD DATA INFILE '\CSV_facilitador.csv'
 REPLACE INTO TABLE facilitador
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -36,7 +36,7 @@ IGNORE 1 ROWS;
 select * from facilitador;
 
 -- instituicao
-LOAD DATA INFILE '\instituicao.csv'
+LOAD DATA INFILE '\CSV_instituicao.csv'
 REPLACE INTO TABLE instituicao
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -47,7 +47,7 @@ select * from INSTITUICAO;
 
 
 -- matricula
-LOAD DATA INFILE '\matricula.csv'
+LOAD DATA INFILE '\CSV_matricula.csv'
 REPLACE INTO TABLE matricula
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -57,7 +57,7 @@ IGNORE 1 ROWS;
 select * from matricula;
 
 -- modulo
-LOAD DATA INFILE '\modulo.csv'
+LOAD DATA INFILE '\CSV_modulo.csv'
 REPLACE INTO TABLE modulo
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -74,7 +74,7 @@ select * from modulo;
 
 -- turma
 
-LOAD DATA INFILE '\turma.csv'
+LOAD DATA INFILE '\CSV_Turma.csv'
 REPLACE INTO TABLE turma
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
