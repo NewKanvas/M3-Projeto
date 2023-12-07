@@ -1,7 +1,8 @@
-CREATE DATABASE RESILIADATA;
-USE RESILIADATA;
-
 DROP DATABASE RESILIADATA;
+
+CREATE DATABASE RESILIADATA;
+
+USE RESILIADATA;
 
 CREATE TABLE instituicao (
 `unidade` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -10,7 +11,7 @@ CREATE TABLE instituicao (
 
 CREATE TABLE aluno (
 `nome` VARCHAR(200) NOT NULL,
-`cpf` VARCHAR(22) PRIMARY KEY NOT NULL,
+`cpf` BIGINT(11) PRIMARY KEY NOT NULL,
 `idade` INT(3) NOT NULL,
 `genero` VARCHAR(100) NOT NULL,
 `email` VARCHAR(250) NOT NULL);
@@ -20,10 +21,10 @@ CREATE TABLE matricula (
 `unidade_fk` INT(11) NOT NULL,
 `id_curso_fk` INT(11) NOT NULL,
 `status` VARCHAR(100) NOT NULL,
-`cpf_aluno_fk` VARCHAR(22) NOT NULL);
+`cpf_aluno_fk`  BIGINT(11) NOT NULL);
 
 CREATE TABLE curso (
-`id_curso` INT(11) PRIMARY AUTO_INCREMENT KEY NOT NULL,
+`id_curso` INT(11) PRIMARY KEY NOT NULL,
 `nome_curso` VARCHAR(200) NOT NULL,
 `duracao` VARCHAR(100) NOT NULL,
 `inicio` DATE NOT NULL,
@@ -36,14 +37,14 @@ CREATE TABLE turma (
 `computador` INT(34) NOT NULL);
 
 CREATE TABLE monitor (
-`cpf_monitor` VARCHAR(22) PRIMARY KEY NOT NULL,
+`cpf_monitor`  BIGINT(11) PRIMARY KEY NOT NULL,
 `nome` VARCHAR(200) NOT NULL,
 `idade` INT(3) NOT NULL,
 `genero` VARCHAR(100) NOT NULL,
 `email` VARCHAR(250) NOT NULL);
 
 CREATE TABLE facilitador (
-`cpf_facilitador` VARCHAR(22) PRIMARY KEY NOT NULL,
+`cpf_facilitador`  BIGINT(11) PRIMARY KEY NOT NULL,
 `nome` VARCHAR(200),
 `idade` INT(3) NOT NULL,
 `genero` VARCHAR(100) NOT NULL,
@@ -60,7 +61,7 @@ CREATE TABLE modulo (
 CREATE TABLE presenca (
 `id_presenca` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
 `matricula_fk` INT(11) NOT NULL,
-`cpf_fk` VARCHAR(22) NOT NULL,
+`cpf_fk`  BIGINT(11) NOT NULL,
 `id_aula_facilitador_fk` INT(11) NOT NULL,
 `presenca_facilitador` INT(11) NOT NULL,
 `id_aula_monitor_fk` INT(11) NOT NULL,
@@ -71,17 +72,17 @@ CREATE TABLE presenca_aluno_monitor  (
 `data` DATE NOT NULL,
 `modulo_fk` INT(11) NOT NULL,
 `turma_fk` INT(11) NOT NULL,
-`cpf_monitor` VARCHAR(22) NOT NULL);
+`cpf_monitor`  BIGINT(11) NOT NULL);
 
 CREATE TABLE presenca_aluno_facilitador (
-`id_aula_facilitador` INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+`id_aula_facilitador` INTEGER PRIMARY KEY NOT NULL,
 `data` DATE NOT NULL,
-`cpf_facilitador` VARCHAR(22) NOT NULL,
+`cpf_facilitador`  BIGINT(11) NOT NULL,
 `modulo` INT(10) NOT NULL,
 `turma_fk` INT(11) NOT NULL);
 
 CREATE TABLE avaliacao (
-`cpf_fk` VARCHAR(22) NOT NULL,
+`cpf_fk` BIGINT(11) NOT NULL,
 `modulo_fk` INT(10) NOT NULL,
 `nota` INT(11) NOT NULL,
 `status` VARCHAR(100) NOT NULL,
