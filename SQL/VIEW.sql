@@ -23,7 +23,6 @@ SQL que combine pelo menos 3 tabelas.
 '''
 
 -- 1. Selecionar a quantidade total de estudantes cadastrados no banco;
-CREATE VIEW numero_alunos AS
 SELECT COUNT(DISTINCT aluno.cpf) AS total_alunos
 FROM aluno;
 
@@ -32,11 +31,8 @@ SELECT * FROM numero_alunos;
 '''
 Como o CPF esta como BIGINT eu estou usando o DISTINCT para tentar contalo apenas uma vez (tem que testar ainda).
 '''
-
-
 -- 2. Selecionar quais pessoas facilitadoras atuam em mais de uma turma;
 
-CREATE VIEW facilitadores_maior2 AS
 SELECT cpf_facilitador, COUNT(DISTINCT turma_fk) AS total_turmas
 FROM presenca_aluno_facilitador
 GROUP BY cpf_facilitador
@@ -55,3 +51,9 @@ SELECT
     diciplina.nome, 
     avaliacao.nota, 
     avaliacao.status
+FROM aluno
+INNER JOIN avaliacao ON
+INNER JOIN diciplina ON
+INNER JOIN modulo ON
+INNER JOIN curso ON
+INNER JOIN turma ON

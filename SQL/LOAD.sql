@@ -84,3 +84,4 @@ IGNORE 1 ROWS;
 select * from turma;
 
 
+-- Tem que fazer os intos para simular o funcionamento das coisas que faltam
