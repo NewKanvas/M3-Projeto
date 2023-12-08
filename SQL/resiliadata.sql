@@ -24,7 +24,7 @@ CREATE TABLE matricula (
 `cpf_aluno_fk`  BIGINT(11) NOT NULL);
 
 CREATE TABLE curso (
-`id_curso` INT(11) PRIMARY AUTO_INCREMENT KEY NOT NULL,
+`id_curso` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
 `nome_curso` VARCHAR(200) NOT NULL,
 `duracao` VARCHAR(100) NOT NULL,
 `inicio` DATE NOT NULL,
