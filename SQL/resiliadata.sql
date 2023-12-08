@@ -26,15 +26,12 @@ CREATE TABLE matricula (
 CREATE TABLE curso (
 `id_curso` INT(11) PRIMARY KEY NOT NULL,
 `nome_curso` VARCHAR(200) NOT NULL,
-`duracao` VARCHAR(100) NOT NULL,
-`inicio` DATE NOT NULL,
-`fim` DATE NOT NULL);
+`duracao` VARCHAR(100) NOT NULL);
 
 CREATE TABLE turma (
 `curso_fk` INT(11) NOT NULL,
 `turma_pk` INT(3) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-`sala` INT(3) NOT NULL,
-`computador` INT(34) NOT NULL);
+`sala` INT(3) NOT NULL);
 
 CREATE TABLE monitor (
 `cpf_monitor`  BIGINT(11) PRIMARY KEY NOT NULL,
