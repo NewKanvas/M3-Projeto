@@ -26,12 +26,15 @@ CREATE TABLE matricula (
 CREATE TABLE curso (
 `id_curso` INT(11) PRIMARY KEY NOT NULL,
 `nome_curso` VARCHAR(200) NOT NULL,
-`duracao` VARCHAR(100) NOT NULL);
+`duracao` VARCHAR(100) NOT NULL,
+`inicio` DATE NOT NULL,
+`fim` DATE NOT NULL);
 
 CREATE TABLE turma (
 `curso_fk` INT(11) NOT NULL,
 `turma_pk` INT(3) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-`sala` INT(3) NOT NULL);
+`sala` INT(3) NOT NULL,
+`computador` INT(34) NOT NULL);
 
 CREATE TABLE monitor (
 `cpf_monitor`  BIGINT(11) PRIMARY KEY NOT NULL,
@@ -55,14 +58,10 @@ CREATE TABLE modulo (
 `carga_horaria` INT(11) NOT NULL,
 `id_disciplina_fk` INT(11) NOT NULL);
 
-CREATE TABLE presenca (
-`id_presenca` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-`matricula_fk` INT(11) NOT NULL,
-`cpf_fk`  BIGINT(11) NOT NULL,
-`id_aula_facilitador_fk` INT(11) NOT NULL,
-`presenca_facilitador` INT(11) NOT NULL,
-`id_aula_monitor_fk` INT(11) NOT NULL,
-`presenca_modulo` INT(11) NOT NULL);
+CREATE TABLE disciplina (
+`id_disciplina` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+`nome` VARCHAR(200) NOT NULL,
+`carga_horaria` INT(11) NOT NULL);
 
 CREATE TABLE presenca_aluno_monitor  (
 `id_aula_monitor_fk` INTEGER(200) PRIMARY KEY NOT NULL,
@@ -78,6 +77,15 @@ CREATE TABLE presenca_aluno_facilitador (
 `modulo` INT(10) NOT NULL,
 `turma_fk` INT(11) NOT NULL);
 
+CREATE TABLE presenca (
+`id_presenca` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+`matricula_fk` INT(11) NOT NULL,
+`cpf_fk`  BIGINT(11) NOT NULL,
+`id_aula_facilitador_fk` INT(11) NOT NULL,
+`presenca_facilitador` INT(11) NOT NULL,
+`id_aula_monitor_fk` INT(11) NOT NULL,
+`presenca_modulo` INT(11) NOT NULL);
+
 CREATE TABLE avaliacao (
 `cpf_fk` BIGINT(11) NOT NULL,
 `modulo_fk` INT(10) NOT NULL,
@@ -86,10 +94,7 @@ CREATE TABLE avaliacao (
 `id_disciplina_fk` INT(11) NOT NULL,
 `nome_modulo_pk` INT NOT NULL);
 
-CREATE TABLE disciplina (
-`id_disciplina` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-`nome` VARCHAR(200) NOT NULL,
-`carga_horaria` INT(11) NOT NULL);
+
 
 -- Adicionando chaves estrangeiras
 -- Matrícula
