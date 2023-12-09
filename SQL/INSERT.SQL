@@ -95,3 +95,21 @@ VALUES
 (18, 3, 3, 2, 'Ativa', 90123456721),
 (19, 1, 1, 1, 'Ativa', 01234567890),
 (20, 2, 3, 2, 'Ativa', 98765432101);
+
+-- Inserção na tabela presenca_aluno_facilitador
+INSERT INTO presenca_aluno_facilitador (id_aula_facilitador, data, cpf_facilitador, matricula_aluno_fk, presenca_facilitador, modulo)
+VALUES
+(1, '2023-01-01', 45678901234, 1, 1, 1),
+(2, '2023-01-02', 56789012345, 2, 0, 1),
+(3, '2023-01-03', 67890123456, 3, 1, 2);
+
+-- Inserção na tabela presenca_aluno_monitor
+INSERT INTO presenca_aluno_monitor (id_aula_monitor_fk, data, cpf_monitor, matricula_aluno_fk, presenca_monitor, modulo_fk)
+VALUES
+(1, '2023-01-01', 12345678901, 1, 1, 1),
+(2, '2023-01-02', 23456789012, 2, 0, 1),
+(3, '2023-01-03', 34567890123, 3, 1, 2);
+
+SELECT * FROM presenca_aluno_monitor;
+SELECT * FROM presenca_aluno_facilitador;
+SELECT * FROM presenca;

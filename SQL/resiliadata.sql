@@ -64,30 +64,38 @@ CREATE TABLE disciplina (
 CREATE TABLE presenca_aluno_monitor  (
   `id_aula_monitor_fk` INTEGER(200) PRIMARY KEY NOT NULL,
   `data` DATE NOT NULL,
+  `cpf_monitor`  BIGINT(11) NOT NULL,
+  `matricula_aluno_fk` INT(11) NOT NULL,
   `presenca_monitor` BOOLEAN NOT NULL DEFAULT 0,
-  `modulo_fk` INT(11) NOT NULL,
-  `turma_fk` INT(11) NOT NULL,
-  `cpf_monitor`  BIGINT(11) NOT NULL);
+  `modulo_fk` INT(11) NOT NULL);
 
 CREATE TABLE presenca_aluno_facilitador (
   `id_aula_facilitador` INTEGER PRIMARY KEY NOT NULL,
   `data` DATE NOT NULL,
   `cpf_facilitador`  BIGINT(11) NOT NULL,
+  `matricula_aluno_fk` INT(11) NOT NULL,
   `presenca_facilitador` BOOLEAN NOT NULL DEFAULT 0,
-  `modulo` INT(10) NOT NULL,
-  `turma_fk` INT(11) NOT NULL);
+  `modulo` INT(10) NOT NULL);
 
 CREATE TABLE presenca (
   `id_presenca` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-  `matricula_fk` INT(11) NOT NULL,
-  `cpf_fk` BIGINT(11) NOT NULL,
+  `matricula_aluno_fk` INT(11) NOT NULL,
   `data_fk` DATE NOT NULL,
-  `id_turma_fk`INT(3) NOT NULL,
   `id_aula_facilitador_fk` INT(11) NOT NULL,
   `presenca_facilitador_fk` BOOLEAN NOT NULL DEFAULT 0,
   `id_aula_monitor_fk` INT(11) NOT NULL,
   `presenca_monitor_fk` BOOLEAN NOT NULL DEFAULT 0,
   `presenca_modulo` INT(11) NOT NULL);
+
+CREATE TABLE avaliacao (
+  `id_avaliacao` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  `matricula_aluno_fk` INT(11) NOT NULL,
+  `modulo_fk` INT(10) NOT NULL,
+  `nota` INT(11) NOT NULL,
+  `status` VARCHAR(100) NOT NULL,
+  `id_disciplina_fk` INT(11) NOT NULL,
+  `nome_modulo_pk` INT NOT NULL);
+
 
 -- Trigger do Presença
 
@@ -144,17 +152,6 @@ END //
 
 DELIMITER ;
 
-
-
-CREATE TABLE avaliacao (
-  `cpf_fk` BIGINT(11) NOT NULL,
-  `modulo_fk` INT(10) NOT NULL,
-  `nota` INT(11) NOT NULL,
-  `status` VARCHAR(100) NOT NULL,
-  `id_disciplina_fk` INT(11) NOT NULL,
-  `nome_modulo_pk` INT NOT NULL);
-
-
 -- Adicionando chaves estrangeiras
 -- Matrícula
 ALTER TABLE matricula 
@@ -173,7 +170,6 @@ ALTER TABLE matricula
 ADD CONSTRAINT fk_matricula_turma
 FOREIGN KEY (id_turma_fk) REFERENCES turma(turma_pk);
 
-
 -- Turma
 ALTER TABLE turma 
   ADD CONSTRAINT fk_turma_curso 
@@ -190,8 +186,8 @@ ALTER TABLE modulo
 
 -- Presença
 ALTER TABLE presenca 
-  ADD CONSTRAINT fk_presenca_aluno 
-  FOREIGN KEY (cpf_fk) REFERENCES aluno(cpf);
+  ADD CONSTRAINT fk_presenca_matricula
+  FOREIGN KEY (matricula_aluno_fk) REFERENCES matricula(matricula);
 
 ALTER TABLE presenca 
   ADD CONSTRAINT fk_presenca_facilitador 
@@ -201,22 +197,20 @@ ALTER TABLE presenca
   ADD CONSTRAINT fk_presenca_monitor 
   FOREIGN KEY (id_aula_monitor_fk) REFERENCES presenca_aluno_monitor(id_aula_monitor_fk);
 
-ALTER TABLE presenca  
-  ADD CONSTRAINT fk_presenca_turma
-  FOREIGN KEY (id_turma_fk) REFERENCES turma(turma_pk);
 
 -- Presença Aluno Monitor
 ALTER TABLE presenca_aluno_monitor  
   ADD CONSTRAINT fk_presenca_aluno_monitor_modulo 
   FOREIGN KEY (modulo_fk) REFERENCES modulo(id_modulo);
 
-ALTER TABLE presenca_aluno_monitor  
-  ADD CONSTRAINT fk_presenca_aluno_monitor_turma 
-  FOREIGN KEY (turma_fk) REFERENCES turma(turma_pk);
 
 ALTER TABLE presenca_aluno_monitor  
   ADD CONSTRAINT fk_presenca_aluno_monitor_monitor 
   FOREIGN KEY (cpf_monitor) REFERENCES monitor(cpf_monitor);
+
+ALTER TABLE presenca_aluno_monitor 
+  ADD CONSTRAINT fk_presenca_aluno_monitor_matricula
+  FOREIGN KEY (matricula_aluno_fk) REFERENCES matricula(matricula);
 
 -- Presença Aluno Facilitador
 ALTER TABLE presenca_aluno_facilitador 
@@ -228,13 +222,13 @@ ALTER TABLE presenca_aluno_facilitador
   FOREIGN KEY (modulo) REFERENCES modulo(id_modulo);
 
 ALTER TABLE presenca_aluno_facilitador 
-  ADD CONSTRAINT fk_presenca_aluno_facilitador_turma 
-  FOREIGN KEY (turma_fk) REFERENCES turma(turma_pk);
+  ADD CONSTRAINT fk_presenca_aluno_facilitador_matricula
+  FOREIGN KEY (matricula_aluno_fk) REFERENCES matricula(matricula);
 
 -- Avaliação
 ALTER TABLE avaliacao 
-  ADD CONSTRAINT fk_avaliacao_aluno 
-  FOREIGN KEY (cpf_fk) REFERENCES aluno(cpf);
+  ADD CONSTRAINT fk_avaliacao_matricula
+  FOREIGN KEY (matricula_aluno_fk) REFERENCES matricula(matricula);
 
 ALTER TABLE avaliacao 
   ADD CONSTRAINT fk_avaliacao_modulo 
