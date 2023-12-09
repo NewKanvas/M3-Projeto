@@ -62,7 +62,7 @@ CREATE TABLE disciplina (
   `carga_horaria` INT(11) NOT NULL);
 
 CREATE TABLE presenca_aluno_monitor  (
-  `id_aula_monitor_fk` INTEGER(200) PRIMARY KEY NOT NULL,
+  `id_aula_monitor` INTEGER(200) PRIMARY KEY NOT NULL,
   `data` DATE NOT NULL,
   `cpf_monitor`  BIGINT(11) NOT NULL,
   `matricula_aluno_fk` INT(11) NOT NULL,
@@ -80,12 +80,12 @@ CREATE TABLE presenca_aluno_facilitador (
 CREATE TABLE presenca (
   `id_presenca` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
   `matricula_aluno_fk` INT(11) NOT NULL,
-  `data_fk` DATE NOT NULL,
+  `data` DATE NOT NULL,
   `id_aula_facilitador_fk` INT(11) NOT NULL,
   `presenca_facilitador_fk` BOOLEAN NOT NULL DEFAULT 0,
   `id_aula_monitor_fk` INT(11) NOT NULL,
   `presenca_monitor_fk` BOOLEAN NOT NULL DEFAULT 0,
-  `presenca_modulo` INT(11) NOT NULL);
+  `presenca_modulo` INT(11));
 
 CREATE TABLE avaliacao (
   `id_avaliacao` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -94,63 +94,7 @@ CREATE TABLE avaliacao (
   `nota` INT(11) NOT NULL,
   `status` VARCHAR(100) NOT NULL,
   `id_disciplina_fk` INT(11) NOT NULL,
-  `nome_modulo_pk` INT NOT NULL);
-
-
--- Trigger do Presença
-
-DELIMITER / / 
-CREATE TRIGGER tr_presenca_update 
-AFTER INSERT ON presenca_aluno_facilitador 
-FOR EACH ROW 
-BEGIN DECLARE monitor_presence BOOLEAN;
-
-    -- Verifica se existe uma entrada correspondente na tabela presenca_aluno_monitor
-    SELECT
-        presenca_monitor INTO monitor_presence
-    FROM
-        presenca_aluno_monitor
-    WHERE
-        id_aula_monitor_fk = NEW.id_aula_facilitador;
-
-    -- Atualiza a tabela presenca
-    UPDATE presenca
-    SET
-        presenca_facilitador_fk = NEW.presenca_facilitador,
-        id_aula_facilitador_fk = NEW.id_aula_facilitador,
-        presenca_monitor_fk = monitor_presence,
-        presenca_modulo = CASE
-            WHEN NEW.presenca_facilitador = 1
-            AND monitor_presence = TRUE THEN 1
-            ELSE 0
-        END
-    WHERE
-        id_aula_facilitador_fk = NEW.id_aula_facilitador;
-
-END / / DELIMITER;
-
-DELIMITER //
-
-CREATE TRIGGER tr_presenca_monitor_update
-AFTER INSERT ON presenca_aluno_monitor
-FOR EACH ROW
-BEGIN DECLARE facilitador_presence BOOLEAN;
-
-    -- Verifica se existe uma entrada correspondente na tabela presenca_aluno_facilitador
-    SELECT presenca_facilitador INTO facilitador_presence
-    FROM presenca_aluno_facilitador
-    WHERE id_aula_facilitador = NEW.id_aula_monitor_fk;
-
-    -- Atualiza a tabela presenca
-    UPDATE presenca
-    SET presenca_monitor_fk = NEW.presenca_monitor,
-        id_aula_monitor_fk = NEW.id_aula_monitor_fk,
-        presenca_facilitador_fk = facilitador_presence,
-        presenca_modulo = CASE WHEN facilitador_presence = TRUE AND NEW.presenca_monitor = 1 THEN 1 ELSE 0 END
-    WHERE id_aula_monitor_fk = NEW.id_aula_monitor_fk;
-END //
-
-DELIMITER ;
+  `id_modulo_fk` INT NOT NULL);
 
 -- Adicionando chaves estrangeiras
 -- Matrícula
@@ -195,7 +139,7 @@ ALTER TABLE presenca
 
 ALTER TABLE presenca 
   ADD CONSTRAINT fk_presenca_monitor 
-  FOREIGN KEY (id_aula_monitor_fk) REFERENCES presenca_aluno_monitor(id_aula_monitor_fk);
+  FOREIGN KEY (id_aula_monitor_fk) REFERENCES presenca_aluno_monitor(id_aula_monitor);
 
 
 -- Presença Aluno Monitor
@@ -240,4 +184,4 @@ ALTER TABLE avaliacao
 
 ALTER TABLE avaliacao 
   ADD CONSTRAINT fk_avaliacao_modulo_nome 
-  FOREIGN KEY (nome_modulo_pk) REFERENCES modulo(id_modulo);
+  FOREIGN KEY (id_modulo_fk) REFERENCES modulo(id_modulo);
