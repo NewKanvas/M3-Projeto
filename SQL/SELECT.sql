@@ -1,3 +1,5 @@
+USE RESILIADATA;
+
 -- Tabela instituicao
 SELECT * FROM instituicao;
 

@@ -75,12 +75,13 @@ CREATE TABLE presenca_aluno_facilitador (
   `cpf_facilitador`  BIGINT(11) NOT NULL,
   `matricula_aluno_fk` INT(11) NOT NULL,
   `presenca_facilitador` BOOLEAN NOT NULL DEFAULT 0,
-  `modulo` INT(10) NOT NULL);
+  `modulo_fk` INT(10) NOT NULL);
 
 CREATE TABLE presenca (
   `id_presenca` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
   `matricula_aluno_fk` INT(11) NOT NULL,
   `data` DATE NOT NULL,
+  `modulo_fk` INT(11) NOT NULL,
   `id_aula_facilitador_fk` INT(11) NOT NULL,
   `id_aula_monitor_fk` INT(11) NOT NULL,
   `presenca_facilitador_fk` BOOLEAN NOT NULL DEFAULT 0,
@@ -90,7 +91,6 @@ CREATE TABLE presenca (
 CREATE TABLE avaliacao (
   `id_avaliacao` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
   `matricula_aluno_fk` INT(11) NOT NULL,
-  `modulo_fk` INT(10) NOT NULL,
   `nota` INT(11) NOT NULL,
   `status` VARCHAR(100) NOT NULL,
   `id_disciplina_fk` INT(11) NOT NULL,
@@ -141,6 +141,9 @@ ALTER TABLE presenca
   ADD CONSTRAINT fk_presenca_monitor 
   FOREIGN KEY (id_aula_monitor_fk) REFERENCES presenca_aluno_monitor(id_aula_monitor);
 
+ALTER TABLE presenca  
+  ADD CONSTRAINT fk_presenca_modulo 
+  FOREIGN KEY (modulo_fk) REFERENCES modulo(id_modulo);
 
 -- Presença Aluno Monitor
 ALTER TABLE presenca_aluno_monitor  
@@ -163,7 +166,7 @@ ALTER TABLE presenca_aluno_facilitador
 
 ALTER TABLE presenca_aluno_facilitador 
   ADD CONSTRAINT fk_presenca_aluno_facilitador_modulo 
-  FOREIGN KEY (modulo) REFERENCES modulo(id_modulo);
+  FOREIGN KEY (modulo_fk) REFERENCES modulo(id_modulo);
 
 ALTER TABLE presenca_aluno_facilitador 
   ADD CONSTRAINT fk_presenca_aluno_facilitador_matricula
@@ -175,13 +178,9 @@ ALTER TABLE avaliacao
   FOREIGN KEY (matricula_aluno_fk) REFERENCES matricula(matricula);
 
 ALTER TABLE avaliacao 
-  ADD CONSTRAINT fk_avaliacao_modulo 
-  FOREIGN KEY (modulo_fk) REFERENCES modulo(id_modulo);
-
-ALTER TABLE avaliacao 
   ADD CONSTRAINT fk_avaliacao_disciplina 
   FOREIGN KEY (id_disciplina_fk) REFERENCES disciplina(id_disciplina);
 
 ALTER TABLE avaliacao 
-  ADD CONSTRAINT fk_avaliacao_modulo_nome 
+  ADD CONSTRAINT fk_avaliacao_modulo
   FOREIGN KEY (id_modulo_fk) REFERENCES modulo(id_modulo);

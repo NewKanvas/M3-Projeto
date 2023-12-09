@@ -99,7 +99,7 @@ VALUES
 -- Inserção na tabela AULAS
 
 
-INSERT INTO presenca_aluno_facilitador ( data, cpf_facilitador, matricula_aluno_fk, presenca_facilitador, modulo)
+INSERT INTO presenca_aluno_facilitador ( data, cpf_facilitador, matricula_aluno_fk, presenca_facilitador, modulo_fk)
 VALUES
 ('2023-01-01', 45678901234, 1, 1, 1),
 ('2023-01-01', 45678901234, 2, 1, 1),
@@ -140,6 +140,7 @@ VALUES
 INSERT INTO presenca (
   matricula_aluno_fk,
   data,
+  modulo_fk,
   id_aula_facilitador_fk,
   id_aula_monitor_fk,
   presenca_facilitador_fk,
@@ -149,6 +150,7 @@ INSERT INTO presenca (
 SELECT
   paf.matricula_aluno_fk,
   paf.data,
+  paf.modulo_fk,
   paf.id_aula_facilitador,
   pam.id_aula_monitor,
   paf.presenca_facilitador,
