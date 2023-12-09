@@ -1,7 +1,5 @@
-DROP DATABASE RESILIADATA;
-
+DROP DATABASE IF EXISTS RESILIADATA;
 CREATE DATABASE RESILIADATA;
-
 USE RESILIADATA;
 
 CREATE TABLE instituicao (
@@ -20,6 +18,7 @@ CREATE TABLE matricula (
   `matricula` INT(11) PRIMARY KEY NOT NULL,
   `unidade_fk` INT(11) NOT NULL,
   `id_curso_fk` INT(11) NOT NULL,
+  `id_turma_fk` INT(11) NOT NULL,
   `status` VARCHAR(100) NOT NULL,
   `cpf_aluno_fk`  BIGINT(11) NOT NULL);
 
@@ -83,26 +82,68 @@ CREATE TABLE presenca (
   `matricula_fk` INT(11) NOT NULL,
   `cpf_fk` BIGINT(11) NOT NULL,
   `data_fk` DATE NOT NULL,
+  `id_turma_fk`INT(3) NOT NULL,
   `id_aula_facilitador_fk` INT(11) NOT NULL,
   `presenca_facilitador_fk` BOOLEAN NOT NULL DEFAULT 0,
   `id_aula_monitor_fk` INT(11) NOT NULL,
   `presenca_monitor_fk` BOOLEAN NOT NULL DEFAULT 0,
-  `presenca_modulo` INT(11) NOT NULL,
+  `presenca_modulo` INT(11) NOT NULL);
 
--- Adicionando chaves estrangeiras em presenca
-ALTER TABLE presenca
-  ADD CONSTRAINT fk_presenca_facilitador
-  FOREIGN KEY (id_aula_facilitador_fk) REFERENCES presenca_aluno_facilitador(id_aula_facilitador);
+-- Trigger do Presença
 
-ALTER TABLE presenca
-  ADD CONSTRAINT fk_presenca_monitor
-  FOREIGN KEY (id_aula_monitor_fk) REFERENCES presenca_aluno_monitor(id_aula_monitor_fk);
+DELIMITER / / 
+CREATE TRIGGER tr_presenca_update 
+AFTER INSERT ON presenca_aluno_facilitador 
+FOR EACH ROW 
+BEGIN DECLARE monitor_presence BOOLEAN;
 
-UPDATE presenca
-SET presenca_modulo = CASE WHEN (
-    presenca_facilitador_fk = 1 AND
-    presenca_monitor_fk = 1
-) THEN 1 ELSE 0 END;
+    -- Verifica se existe uma entrada correspondente na tabela presenca_aluno_monitor
+    SELECT
+        presenca_monitor INTO monitor_presence
+    FROM
+        presenca_aluno_monitor
+    WHERE
+        id_aula_monitor_fk = NEW.id_aula_facilitador;
+
+    -- Atualiza a tabela presenca
+    UPDATE presenca
+    SET
+        presenca_facilitador_fk = NEW.presenca_facilitador,
+        id_aula_facilitador_fk = NEW.id_aula_facilitador,
+        presenca_monitor_fk = monitor_presence,
+        presenca_modulo = CASE
+            WHEN NEW.presenca_facilitador = 1
+            AND monitor_presence = TRUE THEN 1
+            ELSE 0
+        END
+    WHERE
+        id_aula_facilitador_fk = NEW.id_aula_facilitador;
+
+END / / DELIMITER;
+
+DELIMITER //
+
+CREATE TRIGGER tr_presenca_monitor_update
+AFTER INSERT ON presenca_aluno_monitor
+FOR EACH ROW
+BEGIN DECLARE facilitador_presence BOOLEAN;
+
+    -- Verifica se existe uma entrada correspondente na tabela presenca_aluno_facilitador
+    SELECT presenca_facilitador INTO facilitador_presence
+    FROM presenca_aluno_facilitador
+    WHERE id_aula_facilitador = NEW.id_aula_monitor_fk;
+
+    -- Atualiza a tabela presenca
+    UPDATE presenca
+    SET presenca_monitor_fk = NEW.presenca_monitor,
+        id_aula_monitor_fk = NEW.id_aula_monitor_fk,
+        presenca_facilitador_fk = facilitador_presence,
+        presenca_modulo = CASE WHEN facilitador_presence = TRUE AND NEW.presenca_monitor = 1 THEN 1 ELSE 0 END
+    WHERE id_aula_monitor_fk = NEW.id_aula_monitor_fk;
+END //
+
+DELIMITER ;
+
 
 
 CREATE TABLE avaliacao (
@@ -127,6 +168,11 @@ ALTER TABLE matricula
 ALTER TABLE matricula 
   ADD CONSTRAINT fk_matricula_aluno 
   FOREIGN KEY (cpf_aluno_fk) REFERENCES aluno(cpf);
+
+ALTER TABLE matricula
+ADD CONSTRAINT fk_matricula_turma
+FOREIGN KEY (id_turma_fk) REFERENCES turma(turma_pk);
+
 
 -- Turma
 ALTER TABLE turma 
@@ -155,6 +201,10 @@ ALTER TABLE presenca
   ADD CONSTRAINT fk_presenca_monitor 
   FOREIGN KEY (id_aula_monitor_fk) REFERENCES presenca_aluno_monitor(id_aula_monitor_fk);
 
+ALTER TABLE presenca  
+  ADD CONSTRAINT fk_presenca_turma
+  FOREIGN KEY (id_turma_fk) REFERENCES turma(turma_pk);
+
 -- Presença Aluno Monitor
 ALTER TABLE presenca_aluno_monitor  
   ADD CONSTRAINT fk_presenca_aluno_monitor_modulo 
@@ -162,7 +212,7 @@ ALTER TABLE presenca_aluno_monitor
 
 ALTER TABLE presenca_aluno_monitor  
   ADD CONSTRAINT fk_presenca_aluno_monitor_turma 
-  FOREIGN KEY (turma_fk) REFERENCES turma(curso_fk);
+  FOREIGN KEY (turma_fk) REFERENCES turma(turma_pk);
 
 ALTER TABLE presenca_aluno_monitor  
   ADD CONSTRAINT fk_presenca_aluno_monitor_monitor 
@@ -179,7 +229,7 @@ ALTER TABLE presenca_aluno_facilitador
 
 ALTER TABLE presenca_aluno_facilitador 
   ADD CONSTRAINT fk_presenca_aluno_facilitador_turma 
-  FOREIGN KEY (turma_fk) REFERENCES turma(curso_fk);
+  FOREIGN KEY (turma_fk) REFERENCES turma(turma_pk);
 
 -- Avaliação
 ALTER TABLE avaliacao 

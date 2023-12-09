@@ -25,6 +25,8 @@ SQL que combine pelo menos 3 tabelas.
 -- 1. Selecionar a quantidade total de estudantes cadastrados no banco;
 SELECT COUNT(aluno.cpf) AS total_alunos
 FROM aluno;
+-- Funciona Corretamente
+
 
 -- 2. Selecionar quais pessoas facilitadoras atuam em mais de uma turma;
 
