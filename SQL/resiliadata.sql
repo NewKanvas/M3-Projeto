@@ -62,7 +62,7 @@ CREATE TABLE disciplina (
   `carga_horaria` INT(11) NOT NULL);
 
 CREATE TABLE presenca_aluno_monitor  (
-  `id_aula_monitor` INTEGER(200) PRIMARY KEY NOT NULL,
+  `id_aula_monitor` INTEGER(200) PRIMARY KEY AUTO_INCREMENT NOT NULL,
   `data` DATE NOT NULL,
   `cpf_monitor`  BIGINT(11) NOT NULL,
   `matricula_aluno_fk` INT(11) NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE presenca_aluno_monitor  (
   `modulo_fk` INT(11) NOT NULL);
 
 CREATE TABLE presenca_aluno_facilitador (
-  `id_aula_facilitador` INTEGER PRIMARY KEY NOT NULL,
+  `id_aula_facilitador` INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
   `data` DATE NOT NULL,
   `cpf_facilitador`  BIGINT(11) NOT NULL,
   `matricula_aluno_fk` INT(11) NOT NULL,
@@ -82,8 +82,8 @@ CREATE TABLE presenca (
   `matricula_aluno_fk` INT(11) NOT NULL,
   `data` DATE NOT NULL,
   `id_aula_facilitador_fk` INT(11) NOT NULL,
-  `presenca_facilitador_fk` BOOLEAN NOT NULL DEFAULT 0,
   `id_aula_monitor_fk` INT(11) NOT NULL,
+  `presenca_facilitador_fk` BOOLEAN NOT NULL DEFAULT 0,
   `presenca_monitor_fk` BOOLEAN NOT NULL DEFAULT 0,
   `presenca_modulo` INT(11));
 

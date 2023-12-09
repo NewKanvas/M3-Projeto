@@ -99,22 +99,66 @@ VALUES
 -- Inserção na tabela AULAS
 
 
-INSERT INTO presenca_aluno_facilitador (id_aula_facilitador, data, cpf_facilitador, matricula_aluno_fk, presenca_facilitador, modulo)
+INSERT INTO presenca_aluno_facilitador ( data, cpf_facilitador, matricula_aluno_fk, presenca_facilitador, modulo)
 VALUES
-(1, '2023-01-01', 45678901234, 1, 1, 1),
-(2, '2023-01-02', 56789012345, 2, 0, 1),
-(3, '2023-01-03', 67890123456, 3, 1, 2);
+('2023-01-01', 45678901234, 1, 1, 1),
+('2023-01-01', 45678901234, 2, 1, 1),
+('2023-01-01', 45678901234, 3, 1, 1),
 
-INSERT INTO presenca_aluno_monitor (id_aula_monitor, data, cpf_monitor, matricula_aluno_fk, presenca_monitor, modulo_fk)
+('2023-01-01', 56789012345, 4, 1, 1),
+('2023-01-01', 56789012345, 5, 1, 1),
+('2023-01-01', 56789012345, 6, 1, 1),
+
+('2023-01-02', 45678901234, 1, 1, 1),
+('2023-01-02', 45678901234, 2, 1, 1),
+('2023-01-02', 45678901234, 3, 1, 1),
+
+('2023-01-02', 56789012345, 4, 0, 1),
+('2023-01-02', 56789012345, 5, 1, 1),
+('2023-01-02', 56789012345, 6, 1, 1);
+
+
+INSERT INTO presenca_aluno_monitor ( data, cpf_monitor, matricula_aluno_fk, presenca_monitor, modulo_fk)
 VALUES
-(1, '2023-01-01', 10987654321, 1, 1, 1),
-(2, '2023-01-02', 21098765432, 2, 0, 1),
-(3, '2023-01-03', 32109876543, 3, 1, 2);
+('2023-01-01', 10987654321, 1, 1, 1),
+('2023-01-01', 10987654321, 2, 1, 1),
+('2023-01-01', 10987654321, 3, 1, 1),
 
-INSERT INTO presenca (matricula_aluno_fk, data, id_aula_facilitador_fk, presenca_facilitador_fk, id_aula_monitor_fk, presenca_monitor_fk, presenca_modulo)
-SELECT paf.matricula_aluno_fk, paf.data, paf.id_aula_facilitador, paf.presenca_facilitador, pam.id_aula_monitor, pam.presenca_monitor, paf.modulo
-FROM presenca_aluno_facilitador paf
-INNER JOIN presenca_aluno_monitor pam ON pam.id_aula_monitor = paf.id_aula_facilitador;
+('2023-01-01', 21098765432, 4, 1, 1),
+('2023-01-01', 21098765432, 5, 1, 1),
+('2023-01-01', 21098765432, 6, 1, 1),
+
+('2023-01-02', 10987654321, 1, 1, 1),
+('2023-01-02', 10987654321, 2, 0, 1),
+('2023-01-02', 10987654321, 3, 1, 1),
+
+('2023-01-02', 21098765432, 4, 0, 1),
+('2023-01-02', 21098765432, 5, 1, 1),
+('2023-01-02', 21098765432, 6, 1, 1);
+
+
+INSERT INTO presenca (
+  matricula_aluno_fk,
+  data,
+  id_aula_facilitador_fk,
+  id_aula_monitor_fk,
+  presenca_facilitador_fk,
+  presenca_monitor_fk,
+  presenca_modulo
+)
+SELECT
+  paf.matricula_aluno_fk,
+  paf.data,
+  paf.id_aula_facilitador,
+  pam.id_aula_monitor,
+  paf.presenca_facilitador,
+  pam.presenca_monitor,
+  paf.modulo
+FROM
+  presenca_aluno_facilitador paf
+INNER JOIN
+  presenca_aluno_monitor pam ON pam.id_aula_monitor = paf.id_aula_facilitador;
+
 
 -- Visualizar os dados nas tabelas
 SELECT * FROM presenca_aluno_monitor;
