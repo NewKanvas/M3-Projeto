@@ -153,11 +153,12 @@ SELECT
   pam.id_aula_monitor,
   paf.presenca_facilitador,
   pam.presenca_monitor,
-  paf.modulo
+  CASE WHEN paf.presenca_facilitador = 1 AND pam.presenca_monitor = 1 THEN 1 ELSE 0 END AS presenca_modulo
 FROM
   presenca_aluno_facilitador paf
 INNER JOIN
   presenca_aluno_monitor pam ON pam.id_aula_monitor = paf.id_aula_facilitador;
+
 
 
 -- Visualizar os dados nas tabelas
