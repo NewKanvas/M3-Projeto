@@ -444,3 +444,13 @@ INNER JOIN
 GROUP BY
   pa.matricula_aluno_fk, m.numero_modulo, d.nome;
 
+-- Isert da matricula
+
+INSERT INTO avaliacao (matricula_aluno_fk, nota, status, total_presencas, id_modulo_fk)
+VALUES
+(1, 100, 'APROVADO', 22, 1),
+(1, 100, 'APROVADO', 14, 2),
+(2, 100, 'APROVADO', 15, 1),
+(2, 100, 'APROVADO', 14, 2),
+(3, 100, 'APROVADO', 19, 1),
+(3, 100, 'APROVADO', 13, 2);

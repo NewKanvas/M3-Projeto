@@ -93,7 +93,6 @@ CREATE TABLE avaliacao (
   `nota` INT(11) NOT NULL,
   `status` VARCHAR(100) NOT NULL,
   `total_presencas` INT(11) NOT NULL DEFAULT 0,
-  `id_disciplina_fk` INT(11) NOT NULL,
   `id_modulo_fk` INT NOT NULL);
 
 -- Adicionando chaves estrangeiras
@@ -176,10 +175,6 @@ ALTER TABLE presenca_aluno_facilitador
 ALTER TABLE avaliacao 
   ADD CONSTRAINT fk_avaliacao_matricula
   FOREIGN KEY (matricula_aluno_fk) REFERENCES matricula(matricula);
-
-ALTER TABLE avaliacao 
-  ADD CONSTRAINT fk_avaliacao_disciplina 
-  FOREIGN KEY (id_disciplina_fk) REFERENCES disciplina(id_disciplina);
 
 ALTER TABLE avaliacao 
   ADD CONSTRAINT fk_avaliacao_modulo
