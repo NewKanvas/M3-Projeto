@@ -58,8 +58,7 @@ CREATE TABLE modulo (
 
 CREATE TABLE disciplina (
   `id_disciplina` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-  `nome` VARCHAR(200) NOT NULL,
-  `carga_horaria` INT(11) NOT NULL);
+  `nome` VARCHAR(200) NOT NULL);
 
 CREATE TABLE presenca_aluno_monitor  (
   `id_aula_monitor` INTEGER(200) PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -93,6 +92,7 @@ CREATE TABLE avaliacao (
   `matricula_aluno_fk` INT(11) NOT NULL,
   `nota` INT(11) NOT NULL,
   `status` VARCHAR(100) NOT NULL,
+  `total_presencas` INT(11) NOT NULL DEFAULT 0,
   `id_disciplina_fk` INT(11) NOT NULL,
   `id_modulo_fk` INT NOT NULL);
 
