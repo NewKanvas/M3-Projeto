@@ -507,3 +507,6 @@ VALUES
 (6, 0, 'CANCELADO', 1, 12);
 
 SELECT * FROM avaliacao;
+
+UPDATE avaliacao SET status = 'REPROVADO' WHERE matricula_aluno_fk IN (4, 5, 6);
+SELECT * FROM log_status_update;

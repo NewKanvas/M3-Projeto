@@ -1,4 +1,4 @@
-/*
+'''
 Essas informações são colocadas em
 planilhas diferentes, dificultando muitas das vezes a extração de dados
 estratégicos para a empresa.
@@ -20,7 +20,7 @@ agrupados por turma;
 e inserir um novo dado em uma tabela de log.
 ● Além disso, vocês deverão pensar em mais uma pergunta que deverá ser respondida por scripts
 SQL que combine pelo menos 3 tabelas.
-*/
+'''
 
 -- 
 
@@ -32,6 +32,14 @@ FROM aluno;
 SELECT COUNT(matricula) AS total_matriculas
 FROM matricula;
 
+-- Ver as turmas que cada facilitador ja deu aula
+
+SELECT DISTINCT f.nome, f.cpf_facilitador, t.sala
+FROM facilitador f
+INNER JOIN presenca_aluno_facilitador paf ON paf.cpf_facilitador = f.cpf_facilitador
+INNER JOIN matricula m ON m.matricula = paf.matricula_aluno_fk
+INNER JOIN turma t ON t.turma_pk = m.id_turma_fk;
+
 -- 2. Selecionar quais pessoas facilitadoras atuam em mais de uma turma
 
 SELECT f.nome, f.cpf_facilitador, COUNT(DISTINCT t.sala) AS total_turmas
@@ -41,6 +49,32 @@ INNER JOIN matricula m ON m.matricula = paf.matricula_aluno_fk
 INNER JOIN turma t ON t.turma_pk = m.id_turma_fk
 GROUP BY f.nome, f.cpf_facilitador
 HAVING COUNT(DISTINCT t.sala) > 1;
+
+-- Contar o total de aulas ministradas por cada facilitador
+SELECT f.nome, paf.cpf_facilitador, COUNT(DISTINCT paf.id_aula_facilitador) AS total_aulas_ministradas
+FROM presenca_aluno_facilitador paf
+INNER JOIN facilitador f ON paf.cpf_facilitador = f.cpf_facilitador
+WHERE presenca_facilitador = 1
+GROUP BY cpf_facilitador;
+
+-- 3. Crie uma view que selecione a porcentagem de estudantes com status de evasão agrupados por turma;
+
+SELECT m.matricula, t.sala, a.status
+FROM avaliacao a
+INNER JOIN matricula m ON m.matricula = a.matricula_aluno_fk
+INNER JOIN turma t ON t.turma_pk = m.id_turma_fk;
+
+SELECT
+    t.sala,
+    COUNT(CASE WHEN a.status = 'APROVADO' THEN 1 END) AS aprovados,
+    COUNT(CASE WHEN a.status = 'EVADIDO' THEN 1 END) AS evadidos,
+    COUNT(CASE WHEN a.status NOT IN ('APROVADO', 'EVADIDO') THEN 1 END) AS outros
+FROM
+    avaliacao a
+INNER JOIN matricula m ON m.matricula = a.matricula_aluno_fk
+INNER JOIN turma t ON t.turma_pk = m.id_turma_fk
+GROUP BY
+    t.sala;
 
 -- 3. Crie uma view que selecione a porcentagem de estudantes com status de evasão agrupados por turma;
 
@@ -63,21 +97,9 @@ GROUP BY
 
 SELECT * FROM porcentagem_status;
 
-
-/*
-ALERTA FAZER 5 PERGUNTA!!!!!!!!!!!!
-ALERTA FAZER 5 PERGUNTA!!!!!!!!!!!!
-ALERTA FAZER 5 PERGUNTA!!!!!!!!!!!!
-
-O arquivo tests.sql tem varios selects que fui montando. Pode ser um de la tambem.
-
-*/
-
-
-/*
 -- Aluno -> Avaliaçao -> Diciplina - Modulo -> Curso -> Turma
 
--- 5.# Tabela de Status em Geral (Ideia para 5ª Pergunta)
+-- # Tabela de Status em Geral (Ideia para 5ª Pergunta)
 CREATE VIEW status_alunos AS
 SELECT 
     aluno.nome AS nome_aluno,
@@ -93,3 +115,23 @@ INNER JOIN disciplina ON disciplina.id_disciplina = avaliacao.id_disciplina_fk
 INNER JOIN modulo ON modulo.id_disciplina_fk = disciplina.id_disciplina
 INNER JOIN curso ON curso.id_curso = modulo.curso_fk
 INNER JOIN turma ON turma.curso_fk = curso.id_curso;
+
+
+-- Crie a tabela de log
+CREATE TABLE log_status (
+  `id_log` INT(11) PRIMARY KEY AUTO_INCREMENT,
+  `matricula_fk` BIGINT(11) NOT NULL,
+  `status_log` VARCHAR(100) NOT NULL,
+  `data_atualizacao` DATE
+);
+
+DELIMITER //
+CREATE TRIGGER tr_inserir_status
+AFTER INSERT ON avaliacao
+FOR EACH ROW
+BEGIN
+  INSERT INTO log_status (matricula_fk, status_log, data_atualizacao)
+  VALUES (NEW.matricula_aluno_fk, NEW.status, NOW());
+END;
+//
+DELIMITER ;

@@ -1,0 +1,9 @@
+Executar os SQL nessa ordem:
+
+1. RESILIADATA.sql
+2. TRIGGER.sql
+3. INSERT.sql
+
+3,5. SELECT.sql(Opcional)
+
+4. VIEW.sql
