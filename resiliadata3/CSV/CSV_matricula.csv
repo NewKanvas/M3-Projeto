@@ -1,0 +1,6 @@
+matricula,unidade_fk,id_curso_fk,status,cpf_aluno_fk
+1,1,1,"Ativa",12345678901
+2,2,3,"Ativa",23456789012
+3,3,2,"Inativa",34567890123
+4,1,2,"Ativa",45678901234
+5,2,1,"Inativa",56789012345

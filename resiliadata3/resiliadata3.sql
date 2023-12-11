@@ -1,8 +1,8 @@
--- DROP DATABASE RESILIADATA;
+DROP DATABASE IF EXISTS RESILIADATA2;
 
--- CREATE DATABASE RESILIADATA;
+CREATE DATABASE RESILIADATA2;
 
-USE RESILIADATA;
+USE RESILIADATA2;
 
 CREATE TABLE instituicao (
 `unidade` INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE instituicao (
 
 CREATE TABLE aluno (
 `nome` VARCHAR(200) NOT NULL,
-`cpf` VARCHAR(11) PRIMARY KEY NOT NULL,
+`cpf` BIGINT(11) PRIMARY KEY NOT NULL,
 `idade` INT(3) NOT NULL,
 `genero` VARCHAR(100) NOT NULL,
 `email` VARCHAR(250) NOT NULL);
@@ -21,8 +21,7 @@ CREATE TABLE matricula (
 `unidade_fk` INT(11) NOT NULL,
 `id_curso_fk` INT(11) NOT NULL,
 `status` VARCHAR(100) NOT NULL,
-`cpf_aluno_fk`  VARCHAR(11) NOT NULL)
-CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+`cpf_aluno_fk`  BIGINT(11) NOT NULL);
 
 CREATE TABLE curso (
 `id_curso` INT(11) PRIMARY KEY NOT NULL,
@@ -37,14 +36,14 @@ CREATE TABLE turma (
 `fim` DATE NOT NULL);
 
 CREATE TABLE monitor (
-`cpf_monitor`  VARCHAR(11) PRIMARY KEY NOT NULL,
+`cpf_monitor`  BIGINT(11) PRIMARY KEY NOT NULL,
 `nome` VARCHAR(200) NOT NULL,
 `idade` INT(3) NOT NULL,
 `genero` VARCHAR(100) NOT NULL,
 `email` VARCHAR(250) NOT NULL);
 
 CREATE TABLE facilitador (
-`cpf_facilitador`  VARCHAR(11) PRIMARY KEY NOT NULL,
+`cpf_facilitador`  BIGINT(11) PRIMARY KEY NOT NULL,
 `nome` VARCHAR(200),
 `idade` INT(3) NOT NULL,
 `genero` VARCHAR(100) NOT NULL,
@@ -59,7 +58,7 @@ CREATE TABLE modulo (
 
 CREATE TABLE presenca (
 `id_aula_fk` bigint(200) NOT NULL,
-`cpf_fk`  VARCHAR(11) NOT NULL,
+`cpf_fk`  BIGINT(11) NOT NULL,
 `presenca` INT(11) NOT NULL);
 
 

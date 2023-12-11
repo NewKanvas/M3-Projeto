@@ -22,38 +22,80 @@ e inserir um novo dado em uma tabela de log.
 SQL que combine pelo menos 3 tabelas.
 '''
 
+-- 
+
 -- 1. Selecionar a quantidade total de estudantes cadastrados no banco;
-SELECT COUNT(aluno.cpf) AS total_alunos
+SELECT COUNT(cpf) AS total_alunos
 FROM aluno;
--- Funciona Corretamente
 
+-- Total de matrículas
+SELECT COUNT(matricula) AS total_matriculas
+FROM matricula;
 
--- 2. Selecionar quais pessoas facilitadoras atuam em mais de uma turma;
+-- Ver as turmas que cada facilitador ja deu aula
 
-SELECT cpf_facilitador, COUNT(DISTINCT turma_fk) AS total_turmas
-FROM presenca_aluno_facilitador
-GROUP BY cpf_facilitador
-HAVING COUNT(DISTINCT turma_fk) > 1;
+SELECT DISTINCT f.nome, f.cpf_facilitador, t.sala
+FROM facilitador f
+INNER JOIN presenca_aluno_facilitador paf ON paf.cpf_facilitador = f.cpf_facilitador
+INNER JOIN matricula m ON m.matricula = paf.matricula_aluno_fk
+INNER JOIN turma t ON t.turma_pk = m.id_turma_fk;
+
+-- 2. Selecionar quais pessoas facilitadoras atuam em mais de uma turma
+
+SELECT f.nome, f.cpf_facilitador, COUNT(DISTINCT t.sala) AS total_turmas
+FROM facilitador f
+INNER JOIN presenca_aluno_facilitador paf ON paf.cpf_facilitador = f.cpf_facilitador
+INNER JOIN matricula m ON m.matricula = paf.matricula_aluno_fk
+INNER JOIN turma t ON t.turma_pk = m.id_turma_fk
+GROUP BY f.nome, f.cpf_facilitador
+HAVING COUNT(DISTINCT t.sala) > 1;
+
+-- Contar o total de aulas ministradas por cada facilitador
+SELECT f.nome, paf.cpf_facilitador, COUNT(DISTINCT paf.id_aula_facilitador) AS total_aulas_ministradas
+FROM presenca_aluno_facilitador paf
+INNER JOIN facilitador f ON paf.cpf_facilitador = f.cpf_facilitador
+WHERE presenca_facilitador = 1
+GROUP BY cpf_facilitador;
 
 -- 3. Crie uma view que selecione a porcentagem de estudantes com status de evasão agrupados por turma;
 
-CREATE VIEW status_alunos AS
-SELECT 
-    aluno.nome AS nome_aluno,
-    aluno.cpf AS cpf_aluno, 
-    turma.nome_da_turma, 
-    curso.nome_curso, 
-    disciplina.nome AS nome_disciplina, 
-    avaliacao.nota, 
-    avaliacao.status
-FROM aluno
-INNER JOIN avaliacao ON avaliacao.cpf_fk = aluno.cpf
-INNER JOIN disciplina ON disciplina.id_disciplina = avaliacao.id_disciplina_fk
-INNER JOIN modulo ON modulo.id_disciplina_fk = disciplina.id_disciplina
-INNER JOIN curso ON curso.id_curso = modulo.curso_fk
-INNER JOIN turma ON turma.curso_fk = curso.id_curso;
-WHERE avaliacao.status = 'EVADIDO'
---Mostrar porcentagem
+SELECT m.matricula, t.sala, a.status
+FROM avaliacao a
+INNER JOIN matricula m ON m.matricula = a.matricula_aluno_fk
+INNER JOIN turma t ON t.turma_pk = m.id_turma_fk;
+
+SELECT
+    t.sala,
+    COUNT(CASE WHEN a.status = 'APROVADO' THEN 1 END) AS aprovados,
+    COUNT(CASE WHEN a.status = 'EVADIDO' THEN 1 END) AS evadidos,
+    COUNT(CASE WHEN a.status NOT IN ('APROVADO', 'EVADIDO') THEN 1 END) AS outros
+FROM
+    avaliacao a
+INNER JOIN matricula m ON m.matricula = a.matricula_aluno_fk
+INNER JOIN turma t ON t.turma_pk = m.id_turma_fk
+GROUP BY
+    t.sala;
+
+-- 3. Crie uma view que selecione a porcentagem de estudantes com status de evasão agrupados por turma;
+
+CREATE VIEW porcentagem_status AS
+SELECT
+    t.sala,
+    COUNT(CASE WHEN a.status = 'APROVADO' THEN 1 END) AS aprovados,
+    COUNT(CASE WHEN a.status = 'EVADIDO' THEN 1 END) AS evadidos,
+    COUNT(CASE WHEN a.status NOT IN ('APROVADO', 'EVADIDO') THEN 1 END) AS outros,
+    COUNT(*) AS total,
+    ROUND(COUNT(CASE WHEN a.status = 'APROVADO' THEN 1 END) / COUNT(*) * 100, 2) AS percentual_aprovados,
+    ROUND(COUNT(CASE WHEN a.status = 'EVADIDO' THEN 1 END) / COUNT(*) * 100, 2) AS percentual_evadidos,
+    ROUND(COUNT(CASE WHEN a.status NOT IN ('APROVADO', 'EVADIDO') THEN 1 END) / COUNT(*) * 100, 2) AS percentual_outros
+FROM
+    avaliacao a
+INNER JOIN matricula m ON m.matricula = a.matricula_aluno_fk
+INNER JOIN turma t ON t.turma_pk = m.id_turma_fk
+GROUP BY
+    t.sala;
+
+SELECT * FROM porcentagem_status;
 
 -- Aluno -> Avaliaçao -> Diciplina - Modulo -> Curso -> Turma
 
