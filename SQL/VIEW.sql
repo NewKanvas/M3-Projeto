@@ -64,32 +64,21 @@ GROUP BY
 SELECT * FROM porcentagem_status;
 
 
-/*
-ALERTA FAZER 5 PERGUNTA!!!!!!!!!!!!
-ALERTA FAZER 5 PERGUNTA!!!!!!!!!!!!
-ALERTA FAZER 5 PERGUNTA!!!!!!!!!!!!
-
-O arquivo tests.sql tem varios selects que fui montando. Pode ser um de la tambem.
-
-*/
-
-
-/*
--- Aluno -> Avaliaçao -> Diciplina - Modulo -> Curso -> Turma
-
--- 5.# Tabela de Status em Geral (Ideia para 5ª Pergunta)
+-- 5.# Tabela de Status de Alunos
 CREATE VIEW status_alunos AS
 SELECT 
     aluno.nome AS nome_aluno,
     aluno.cpf AS cpf_aluno, 
-    turma.nome_da_turma, 
+    turma.sala, 
     curso.nome_curso, 
-    disciplina.nome AS nome_disciplina, 
     avaliacao.nota, 
     avaliacao.status
 FROM aluno
-INNER JOIN avaliacao ON avaliacao.cpf_fk = aluno.cpf
-INNER JOIN disciplina ON disciplina.id_disciplina = avaliacao.id_disciplina_fk
-INNER JOIN modulo ON modulo.id_disciplina_fk = disciplina.id_disciplina
-INNER JOIN curso ON curso.id_curso = modulo.curso_fk
-INNER JOIN turma ON turma.curso_fk = curso.id_curso;
+INNER JOIN matricula on aluno.cpf = matricula.cpf_aluno_fk
+INNER JOIN curso ON curso.id_curso = matricula.id_curso_fk
+INNER JOIN turma ON turma.curso_fk = curso.id_curso
+INNER JOIN modulo ON turma.curso_fk = modulo.curso_fk
+INNER JOIN avaliacao ON modulo.id_modulo = avaliacao.id_modulo_fk
+GROUP BY aluno.cpf;
+
+SELECT * FROM status_alunos;
