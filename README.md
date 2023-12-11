@@ -91,9 +91,9 @@ Descrição: Este é o modelo lógico do projeto XYZ.
    - `VIEW.sql`: Criação de views para informações estratégicas.
 
 ## Contribuidores
-- [Alessandro Brito](link-para-o-perfil-no-github)
-- [Cássio Ramos](link-para-o-perfil-no-github)
-- [Felipe Damico](link-para-o-perfil-no-github)
+- [Alessandro Brito](https://github.com/alsantosad)
+- [Cássio Ramos](https://github.com/NewKanvas)
+- [Felipe Damico](https://github.com/FelipeDamicoCapitao)
 
 ## Licença
 
