@@ -135,3 +135,21 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+
+-- Criar uma consulta que forneça a média de notas dos alunos agrupada por curso, turma e status.
+
+SELECT
+    curso.nome_curso,
+    turma.nome_da_turma,
+    avaliacao.status,
+    AVG(avaliacao.nota) AS media_notas
+FROM
+    aluno
+INNER JOIN avaliacao ON avaliacao.cpf_fk = aluno.cpf
+INNER JOIN disciplina ON disciplina.id_disciplina = avaliacao.id_disciplina_fk
+INNER JOIN modulo ON modulo.id_disciplina_fk = disciplina.id_disciplina
+INNER JOIN curso ON curso.id_curso = modulo.curso_fk
+INNER JOIN turma ON turma.curso_fk = curso.id_curso
+GROUP BY
+    curso.nome_curso, turma.nome_da_turma, avaliacao.status;

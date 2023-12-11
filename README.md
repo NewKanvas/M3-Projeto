@@ -62,6 +62,10 @@ Descrição: Este é o modelo lógico do projeto XYZ.
 
 ## Guia do Projeto
 - [PDF com Instruções e Detalhes do Projeto](Doc/1694009852_SEDadosM3Projetoemgrupopdf.pdf)
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 ## Download
 
@@ -69,9 +73,26 @@ Descrição: Este é o modelo lógico do projeto XYZ.
 
 
 ## Como Executar
+### Pré-requisitos
+
 1. Clone o repositório para a sua máquina.
-2. Execute os scripts SQL para criação e inserção de dados no banco.
-3. Execute as consultas SQL propostas para análise exploratória.
+
+2. No diretório `C:/xampp`, crie uma pasta chamada "csv" e adicione todos os arquivos CSV necessários.
+
+### Execução dos Scripts SQL
+
+3. Execute os scripts SQL na seguinte ordem:
+
+   - `RESILIADATA.sql`: Criação do banco de dados e tabelas.
+   - `TRIGGER.sql`: Criação de triggers para atualizações no banco.
+   - `INSERT.sql`: Inserção de dados nas tabelas.
+
+### Consultas SQL
+
+4. Execute as consultas SQL propostas para análise exploratória.
+
+   - `SELECT.sql` (Opcional): Consultas adicionais para análise.
+   - `VIEW.sql`: Criação de views para informações estratégicas.
 
 ## Contribuidores
 - [Alessandro Brito](link-para-o-perfil-no-github)
