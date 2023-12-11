@@ -52,13 +52,13 @@ O projeto está estruturado da seguinte forma:
 
 <img src="Doc/MODULO%203%20-%20PROJETO%20EM%20GRUPO%20-%20CONCEITUAL.png" alt="Modelo Conceitual" width="800">
 
-Descrição: Este é o modelo conceitual do projeto XYZ.
+
 
 ## Modelo Lógico
 
 <img src="Doc/MODULO%203%20-%20PROJETO%20EM%20GRUPO%20-%20LOGICO.png" alt="Modelo Lógico" width="800">
 
-Descrição: Este é o modelo lógico do projeto XYZ.
+
 
 ## Guia do Projeto
 - [PDF com Instruções e Detalhes do Projeto](Doc/1694009852_SEDadosM3Projetoemgrupopdf.pdf)
