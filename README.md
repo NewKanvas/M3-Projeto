@@ -62,10 +62,6 @@ Descrição: Este é o modelo lógico do projeto XYZ.
 
 ## Guia do Projeto
 - [PDF com Instruções e Detalhes do Projeto](Doc/1694009852_SEDadosM3Projetoemgrupopdf.pdf)
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
 ## Download
 
