@@ -1,5 +1,8 @@
 # Projeto Resilia - Banco de Dados
 
+![Banner Resilia](Doc/bannerresilia.png)
+
+
 ## Descrição
 Este projeto faz parte do Módulo 3 da Resilia, com o objetivo de modernizar o processo de armazenamento de dados e gerenciamento da estrutura de ensino da empresa.
 
