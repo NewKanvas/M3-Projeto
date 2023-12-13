@@ -94,6 +94,7 @@ O projeto está estruturado da seguinte forma:
 - [Alessandro Brito](https://github.com/alsantosad)
 - [Cássio Ramos](https://github.com/NewKanvas)
 - [Felipe Damico](https://github.com/FelipeDamicoCapitao)
+- [Xavier Flor](naoacheiolink)
 
 ## Licença
 
